@@ -30,18 +30,18 @@ model Participation {
   userId      String
   rating      Int    @default(0)
   matchId     Int
-  wonMatchId  Int
+  wonMatchId  Int?
   homePlayers Int[]
   awayPlayers Int[]
   match       Match  @relation("MatchParticipations", fields: [matchId], references: [id])
-  wonMatch    Match  @relation("MatchWinners", fields: [wonMatchId], references: [id])
+  wonMatch    Match?  @relation("MatchWinners", fields: [wonMatchId], references: [id])
   user        User   @relation(fields: [userId], references: [id])
 }
 
 model Player {
   id          Int     @id
   name        String
-  rating      Int     @default(10)
+  rating      Int     @default(0)
   pos         String
   matchesHome Match[] @relation("MatchHomePlayers")
   matchesAway Match[] @relation("MatchAwayPlayers")
