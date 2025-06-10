@@ -1,0 +1,24 @@
+import { NextFunction, Request, Response } from 'express'
+import { matchService } from './service'
+
+class MatchController {
+  async getLeagues(req: Request, res: Response, next: NextFunction) {
+    try {
+      const leagues = await matchService.getLeagues()
+      res.json(leagues)
+    } catch (error) {
+      next(error)
+    }
+  }
+  async getUpcomings(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { leagueId } = req.params
+      const upcomings = await matchService.getUpcomings(parseInt(leagueId || 'NaN'))
+      res.json(upcomings)
+    } catch (error) {
+      next(error)
+    }
+  }
+}
+
+export const matchController = new MatchController()

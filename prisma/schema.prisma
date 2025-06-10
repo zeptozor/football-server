@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Match {
+  id             Int             @id
+  date           DateTime
+  status         MatchStatus
+  league         Int
+  homeName       String
+  awayName       String
+  awayId         Int
+  homeId         Int
+  homePlayers    Player[]        @relation("MatchHomePlayers")
+  awayPlayers    Player[]        @relation("MatchAwayPlayers")
+  homeScorers    Player[]        @relation("MatchHomeScorer")
+  awayScorers    Player[]        @relation("MatchAwayScorer")
+  participations Participation[] @relation("MatchParticipations")
+  winners        Participation[] @relation("MatchWinners")
+}
+
+model Participation {
+  id          Int    @id @default(autoincrement())
+  earned      Int    @default(0)
+  userId      String
+  rating      Int    @default(0)
+  matchId     Int
+  wonMatchId  Int
+  homePlayers Int[]
+  awayPlayers Int[]
+  match       Match  @relation("MatchParticipations", fields: [matchId], references: [id])
+  wonMatch    Match  @relation("MatchWinners", fields: [wonMatchId], references: [id])
+  user        User   @relation(fields: [userId], references: [id])
+}
+
+model Player {
+  id          Int     @id
+  name        String
+  rating      Int     @default(10)
+  pos         String
+  matchesHome Match[] @relation("MatchHomePlayers")
+  matchesAway Match[] @relation("MatchAwayPlayers")
+  homeGoals   Match[] @relation("MatchHomeScorer")
+  awayGoals   Match[] @relation("MatchAwayScorer")
+}
+
+model User {
+  id             String          @id @default(cuid())
+  username       String          @unique
+  wallet         String          @unique
+  createdAt      DateTime        @default(now())
+  session        String          @unique
+  participations Participation[]
+}
+
+model League {
+  id   Int    @id
+  name String
+}
+
+enum MatchStatus {
+  completed
+  upcoming
+  ongoing
+}
