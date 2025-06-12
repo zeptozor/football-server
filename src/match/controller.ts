@@ -19,6 +19,15 @@ class MatchController {
       next(error)
     }
   }
+  async getMatch(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { matchId } = req.params
+      const match = await matchService.getMatch(parseInt(matchId || 'NaN'))
+      res.json(match)
+    } catch (error) {
+      next(error)
+    }
+  }
 }
 
 export const matchController = new MatchController()

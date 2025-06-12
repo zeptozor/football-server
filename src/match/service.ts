@@ -24,6 +24,23 @@ class MatchService {
     const dtos = matches.map((match) => new MatchDTO(match))
     return dtos
   }
+  async getMatch(matchId: number): Promise<MatchDTO> {
+    if (isNaN(matchId)) throw ApiError.BadRequest('matchId must be an integer')
+    const match = await prisma.match.findFirst({
+      where: { id: matchId },
+      include: {
+        awayPlayers: true,
+        homePlayers: true,
+        homeScorers: true,
+        awayScorers: true,
+        _count: { select: { participations: true } },
+        winners: true,
+      },
+    })
+    if (!match) throw ApiError.BadRequest('match not found')
+    const dto = new MatchDTO(match)
+    return dto
+  }
 }
 
 export const matchService = new MatchService()
