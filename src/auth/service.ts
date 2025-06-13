@@ -29,9 +29,9 @@ class AuthService {
     return { user: dto, session }
   }
   async refresh(session: string) {
-    if (typeof session != 'string' || !session.trim()) throw ApiError.BadRequest('session is expired')
+    if (typeof session != 'string' || !session.trim()) throw ApiError.Unauthorized()
     const existingUser = await prisma.user.findFirst({ where: { session } })
-    if (!existingUser) throw ApiError.BadRequest('session is expired')
+    if (!existingUser) throw ApiError.Unauthorized()
     const newSession = crypto.randomUUID()
     const user = await prisma.user.update({
       where: { id: existingUser.id },

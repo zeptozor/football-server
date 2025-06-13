@@ -4,6 +4,6 @@ import { unauthorized } from '@/shared/middlewares'
 
 export const authRouter = Router()
 
-authRouter.post('/wallet', unauthorized, authController.walletExists)
-authRouter.post('/authorize', unauthorized, authController.authorize)
-authRouter.get('/refersh', authController.refresh)
+authRouter.post('/wallet', authController.walletExists)
+authRouter.post('/', authController.authorize)
+authRouter.get('/refresh', authController.refresh)

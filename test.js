@@ -1,1 +1,1 @@
-console.log(parseInt('NaNdfv'))
+console.log(new Date())

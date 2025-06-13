@@ -9,9 +9,8 @@ class MatchService {
     return leagues
   }
   async getUpcomings(leagueId: number): Promise<MatchDTO[]> {
-    if (isNaN(leagueId)) throw ApiError.BadRequest('leageId must be an integer')
     const matches = await prisma.match.findMany({
-      where: { league: leagueId, status: 'upcoming' },
+      where: { league: isNaN(leagueId) ? undefined : leagueId, status: 'upcoming' },
       include: {
         awayPlayers: true,
         homePlayers: true,

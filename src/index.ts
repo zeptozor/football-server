@@ -20,4 +20,4 @@ app.use('/user', userRouter)
 
 app.use(error)
 
-app.listen(() => console.log('Running on port ' + config.PORT))
+app.listen(config.PORT, () => console.log('Running on port ' + config.PORT))
