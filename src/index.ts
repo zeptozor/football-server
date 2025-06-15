@@ -22,7 +22,7 @@ app.use('/user', userRouter)
 
 app.use(error)
 
-initializeScheduler()
-// fetchUpcomings()
+// initializeScheduler()
+fetchUpcomings()
 
 app.listen(config.PORT, () => console.log('Running on port ' + config.PORT))

@@ -28,6 +28,16 @@ class MatchController {
       next(error)
     }
   }
+  async ratePlayers(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { matchId } = req.params
+      const { playerRatings } = req.body
+      const result = await matchService.ratePlayers(parseInt(matchId || 'NaN'), playerRatings)
+      res.json(result)
+    } catch (error) {
+      next(error)
+    }
+  }
 }
 
 export const matchController = new MatchController()

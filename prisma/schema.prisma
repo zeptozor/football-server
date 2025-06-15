@@ -16,6 +16,7 @@ model Match {
   awayName       String
   awayId         Int
   homeId         Int
+  rated          Boolean         @default(false)
   homePlayers    Player[]        @relation("MatchHomePlayers")
   awayPlayers    Player[]        @relation("MatchAwayPlayers")
   homeScorers    Player[]        @relation("MatchHomeScorer")
@@ -53,6 +54,7 @@ model User {
   id             String          @id @default(cuid())
   username       String          @unique
   wallet         String          @unique
+  role           UserRole        @default(USER)
   createdAt      DateTime        @default(now())
   session        String          @unique
   participations Participation[]
@@ -67,4 +69,9 @@ enum MatchStatus {
   completed
   upcoming
   ongoing
+}
+
+enum UserRole {
+  USER
+  ADMIN
 }

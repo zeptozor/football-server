@@ -282,3 +282,27 @@ const mockLineup = {
 }
 
 export type Lineup = typeof mockLineup
+
+const mockGoal = {
+  time: {
+    elapsed: 25,
+    extra: 0,
+  },
+  team: {
+    id: 463,
+    name: 'Aldosivi',
+    logo: 'https://media.api-sports.io/football/teams/463.png',
+  },
+  player: {
+    id: 6126,
+    name: 'F. Andrada',
+  },
+  assist: {
+    id: 0,
+    name: '',
+  },
+  type: 'Goal',
+  detail: 'Normal Goal',
+}
+
+export type Goal = typeof mockGoal

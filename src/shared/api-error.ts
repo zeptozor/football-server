@@ -7,8 +7,8 @@ export class ApiError {
     this.message = message
   }
 
-  static Unauthorized() {
-    return new ApiError(401, 'You are unauthorized')
+  static Unauthorized(message?: string) {
+    return new ApiError(401, message || 'You are unauthorized')
   }
 
   static BadRequest(message: string) {

@@ -1,8 +1,9 @@
 import axios from 'axios'
+import { config } from './config'
 
 export const api = axios.create({
   baseURL: 'https://v3.football.api-sports.io/',
   headers: {
-    'x-apisports-key': '2f112103d7729b53d64a2b4a07f23ff4',
+    'x-apisports-key': config.FOOTBALL_API_KEY,
   },
 }).get

@@ -20,7 +20,8 @@ export class MatchDTO {
     goals: number
   }
   participants: number
-  winners: Participation[]
+  winners: (Participation & { username: string })[]
+  rated: boolean
 
   constructor(
     match: Match & {
@@ -29,7 +30,7 @@ export class MatchDTO {
       homeScorers: Player[]
       awayScorers: Player[]
       _count: { participations: number }
-      winners: Participation[]
+      winners: (Participation & { user: { username: string } })[]
     },
   ) {
     this.id = match.id
@@ -51,6 +52,7 @@ export class MatchDTO {
       scorers: match.awayScorers,
     }
     this.participants = match._count.participations
-    this.winners = match.winners
+    this.winners = match.winners.map((w) => Object.assign(w, { username: w.user.username }))
+    this.rated = match.rated
   }
 }
